@@ -1,0 +1,28 @@
+    for(i = 0; i < linha; i++)
+    {
+        for(j = 0; j < coluna; j++)
+        {
+            if(mapa[i][j]=='2')
+            {
+                vcont[aux] = 0.;
+            }
+            else if(mapa[i][j]=='3')
+            {
+                vcont[aux] = 1.;
+            }
+            else if(mapa[i][j]=='4')
+            {
+                vcont[aux] = 1.;
+            }
+            else if(mapa[i][j]=='5')
+            {
+                vcont[aux] = 1.;
+            }
+            else if(mapa[i][j]=='6')
+            {
+                vcont[aux] = 1.;
+                err = 1;
+            }
+            aux++;
+        }
+    }

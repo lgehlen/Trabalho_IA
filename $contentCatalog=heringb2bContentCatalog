@@ -1,0 +1,22 @@
+$productCatalog=heringb2bProductCatalog
+$productCV=catalogversion(catalog(id[default=$productCatalog]),version[default=Staged])[default=$productCatalog:Staged]
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+$medias=medias(code,$productCV)
+$imageInputFolder=file:/tmp/heringb2b/360/
+$conversionGroup=conversionGroup(code)[default='heringB2BImage360ConversionGroup']
+$processor=[processor=com.fliegersoftware.media.impex.processors.MediaContainerMultiThreadedImportProcessor]
+$media360Containers=media360Containers(qualifier,$productCV)[mode=append,cellDecorator=com.fliegersoftware.media.impex.translators.MediaContainerQualifierDecorator]
+
+INSERT_UPDATE Media;mediaFormat(qualifier);code[unique=true];mime[default='image/jpeg'];$catalogVersion;folder(qualifier)[default=images];@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator]
+;645Wx914H;IMAGEM360-CODE-1.jpg;;;;$imageInputFolder/IMAGE360-1.jpg
+;645Wx914H;IMAGEM360-CODE-2.jpg;;;;$imageInputFolder/IMAGE360-2.jpg
+
+INSERT_UPDATE MediaContainer;$medias;$productCV[unique=true];qualifier[unique=true];$conversionGroup
+;IMAGEM360-CODE-1.jpg;;IMAGE_CONTAINER360_1_QUALIFIER;heringB2BImage360ConversionGroup
+;IMAGEM360-CODE-2.jpg;;IMAGE_CONTAINER360_2_QUALIFIER;heringB2BImage360ConversionGroup
+
+UPDATE Product[mode=append];code[unique=true];$productCV[unique=true];$media360Containers
+;4E431QEN;;IMAGE_CONTAINER360_1_QUALIFIER
+;4E431QEN;;IMAGE_CONTAINER360_2_QUALIFIER
+
